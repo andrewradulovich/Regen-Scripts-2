@@ -1,0 +1,34 @@
+%% Engine Contour Plot
+clear all; clc; close all;
+geometry_type = "conical";
+bell_pct = 100;
+R_t = 0.73217;
+exp_ratio = 2.9525;
+con_ratio = 6.558;
+conv_angle = 37.5;
+conical_half_angle = 15; 
+L_star = 45; 
+R_fillets = [1.5,1.5,.382];
+arc_bool = 0;
+resolution = [25,50,50];
+L_crude_throat = 0;
+
+
+[x_contour, r_contour, L_c, L_total, L_converging, L_nozzle, L_seg] = engineContour(geometry_type, bell_pct, R_t, exp_ratio, con_ratio, conv_angle, conical_half_angle, L_crude_throat, L_star, R_fillets, arc_bool, resolution);
+geom = engineContour2(R_t, exp_ratio, con_ratio, conv_angle, conical_half_angle, L_star, R_fillets);
+
+x_chamber = linspace(geom.bounds.chamber(1),geom.bounds.chamber(2),25);
+x_converging = linspace(geom.bounds.converging(1),geom.bounds.converging(2),100);
+x_diverging = linspace(geom.bounds.diverging(1),geom.bounds.diverging(2),100);
+x_contour = [x]
+
+figure;
+plot(x_contour, r_contour, 'bo-', 'LineWidth', 1);
+    hold on;
+    plot(x_contour_new, r_contour_new, 'ro-', 'LineWidth', 1);
+    legend('Original Points', 'Equally Spaced Points');
+    xlabel('Inches X');
+    ylabel('Inches Y');
+    axis equal;
+    grid on;
+    title('Engine Contour with Equally Spaced Points');
